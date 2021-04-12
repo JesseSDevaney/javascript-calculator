@@ -1,5 +1,5 @@
 import React from "react";
-import { evaluate } from 'mathjs'
+import { evaluate, round } from 'mathjs'
 import './App.scss';
 
 const DEFAULT_CALCULATION = {
@@ -8,7 +8,7 @@ const DEFAULT_CALCULATION = {
   result: ""
 }
 
-const isDiff = (obj1, obj2) => {
+const isDifferent = (obj1, obj2) => {
   const obj1Keys = Object.keys(obj1);
   const obj2Keys = Object.keys(obj2);
 
@@ -34,6 +34,7 @@ const shouldCaptureKey = (key) => {
   return !ignoreList.includes(key);
 }
 
+
 class App extends React.Component {
   constructor(){
     super();
@@ -41,7 +42,6 @@ class App extends React.Component {
       calculation: DEFAULT_CALCULATION,
       cursorIndex: 0,
       variables: {},
-      menuToggled: false,
       isInputUnfocused: true
     };
 
@@ -61,7 +61,7 @@ class App extends React.Component {
   }
 
   componentWillUnmount(){
-    document.addEventListener("keydown", this.handleUnfocusedInput);
+    document.removeEventListener("keydown", this.handleUnfocusedInput);
   }
 
   executeExpression(){
@@ -71,17 +71,16 @@ class App extends React.Component {
 
     try {
       result = evaluate(expression, variablesAfter);
+      if (isDifferent(variables, variablesAfter)){
+        this.updateVariables(variablesAfter);
+      }
+      if (result !== "") {
+        this.updateResult(result);
+      }
     }
-    catch {
+    catch (error) {
+      console.error(error);
       this.throwMalformedError();
-    }
-
-    if (isDiff(variables, variablesAfter)){
-      this.updateVariables(variablesAfter);
-    }
-
-    if (result !== "") {
-      this.updateResult(result);
     }
   }
 
@@ -91,9 +90,10 @@ class App extends React.Component {
 
   handleUnfocusedInput(event){
     const key = event.key;
-    let { isInputUnfocused } = this.state;
+    let { calculation: { result }, isInputUnfocused } = this.state;
 
     if (key === "Enter") {
+      document.getElementById("input").blur();
       this.executeExpression();
     }
     else if (shouldCaptureKey(key) && isInputUnfocused){
@@ -102,7 +102,11 @@ class App extends React.Component {
 
       switch(key){
         case "Backspace":
-          if (cursorIndex !== 0){
+          if (result !== ""){
+            this.updateCursorIndex(0);
+            this.updateExpression("");
+          }
+          else if (cursorIndex !== 0){
             newExpression = expression.slice(0, cursorIndex - 1) + expression.slice(cursorIndex);
             this.updateCursorIndex(cursorIndex - 1);
             this.updateExpression(newExpression);
@@ -127,10 +131,10 @@ class App extends React.Component {
           this.updateResult("");
           break;
         case "Home":
-            this.setState({cursorIndex: 0});
+          this.updateCursorIndex(0);
           break;
         case "End":
-            this.setState({cursorIndex: expression.length});
+          this.updateCursorIndex(expression.length);
           break;
         default:
           newExpression = expression.slice(0, cursorIndex) + key + expression.slice(cursorIndex)
@@ -142,8 +146,8 @@ class App extends React.Component {
   }
 
   throwMalformedError(){
-    this.setState(state => {
-      const oldCalculation = state.calculation;
+    this.setState(prevState => {
+      const oldCalculation = prevState.calculation;
       const calculationUpdate = {
         isMalformed: true
       };
@@ -169,16 +173,16 @@ class App extends React.Component {
   }
 
   updateFocus(event){
-    this.setState(state => ({
+    this.setState(prevState => ({
       cursorIndex: event.target.selectionStart,
-      isInputUnfocused: !state.isInputUnfocused
+      isInputUnfocused: !prevState.isInputUnfocused
     }));
   }
 
   updateResult(result){
     // called on a successfully executed expression
-    this.setState(state => {
-      const oldCalculation = state.calculation;
+    this.setState(prevState => {
+      const oldCalculation = prevState.calculation;
       const calculationUpdate = {
         isMalformed: false,
         result
@@ -197,49 +201,39 @@ class App extends React.Component {
 
   render() {
     const { expression, isMalformed, result } = this.state.calculation;
-    const variables = this.state.variables;
-    let variablesDisplay = [];
-
-    for (let key in variables) {
-      if(variables.hasOwnProperty(key)){
-        variablesDisplay.unshift(<li key={key}>{key}: {variables[key]}</li>);
-      }
-    }
 
     // TODO: Implement other components
     return (
-      <main id="calculator">
-        {/* TEST CODE */}
-        <input 
-          type="text" 
-          value={expression} 
-          onChange={this.handleFocusedInput} 
-          onFocus={this.updateFocus}
-          onBlur={this.updateFocus}
-          />
-        <p>{result}</p>
-        <p>{isMalformed && "MalformedExpression"}</p>
-        <div id="variables">
-          <ul>
-            {variablesDisplay}
-          </ul>
-        </div>
+      <div class="maintainAspectRatio">
+        <main id="calculator">
+          {/* TEST CODE */}
+          <input 
+            type="text" 
+            id="input"
+            value={expression} 
+            onChange={this.handleFocusedInput} 
+            onFocus={this.updateFocus}
+            onBlur={this.updateFocus}
+            />
+          <p>{result !== "" && round(result, 4)}</p>
+          <p>{isMalformed && "MalformedExpression"}</p>
 
 
-      {/* REAL CODE */}
-        {/* When screen size greater than ... */}
-          {/* <History />
-          <Display />
-          <ButtonContainer /> */}
-        {/* When screen size less than ... */}
-          {/* When menuToggled */}
-            {/* <Display />
+        {/* REAL CODE */}
+          {/* When screen size greater than ... */}
+            {/* <History />
+            <Display />
             <ButtonContainer /> */}
-          {/* When !menuToggled */}
-            {/* <Display />
-            <History />
-            <ButtonContainer /> */}
-      </main>
+          {/* When screen size less than ... */}
+            {/* When menuToggled */}
+              {/* <Display />
+              <ButtonContainer /> */}
+            {/* When !menuToggled */}
+              {/* <Display />
+              <History />
+              <ButtonContainer /> */}
+        </main>
+      </div>
     );
   }
 }
