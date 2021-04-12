@@ -1,6 +1,7 @@
 import React from "react";
-import { evaluate, round } from 'mathjs'
+import { evaluate } from 'mathjs';
 import './App.scss';
+import Display from './Display';
 
 const DEFAULT_CALCULATION = {
   expression: "",
@@ -200,40 +201,33 @@ class App extends React.Component {
   
 
   render() {
-    const { expression, isMalformed, result } = this.state.calculation;
+    const { calculation, cursorIndex, isInputUnfocused} = this.state;
 
     // TODO: Implement other components
     return (
-      <div class="maintainAspectRatio">
-        <main id="calculator">
-          {/* TEST CODE */}
-          <input 
-            type="text" 
-            id="input"
-            value={expression} 
-            onChange={this.handleFocusedInput} 
-            onFocus={this.updateFocus}
-            onBlur={this.updateFocus}
-            />
-          <p>{result !== "" && round(result, 4)}</p>
-          <p>{isMalformed && "MalformedExpression"}</p>
-
-
-        {/* REAL CODE */}
-          {/* When screen size greater than ... */}
-            {/* <History />
-            <Display />
+      <main id="calculator">
+        <Display 
+          calculation={calculation}
+          cursorIndex={cursorIndex}
+          isInputUnfocused={isInputUnfocused}
+          handleChange={this.handleFocusedInput} 
+          updateFocus={this.updateFocus}
+          />
+          
+      {/* REAL CODE */}
+        {/* When screen size greater than ... */}
+          {/* <History />
+          <Display />
+          <ButtonContainer /> */}
+        {/* When screen size less than ... */}
+          {/* When menuToggled */}
+            {/* <Display />
             <ButtonContainer /> */}
-          {/* When screen size less than ... */}
-            {/* When menuToggled */}
-              {/* <Display />
-              <ButtonContainer /> */}
-            {/* When !menuToggled */}
-              {/* <Display />
-              <History />
-              <ButtonContainer /> */}
-        </main>
-      </div>
+          {/* When !menuToggled */}
+            {/* <Display />
+            <History />
+            <ButtonContainer /> */}
+      </main>
     );
   }
 }

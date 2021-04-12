@@ -9,24 +9,10 @@ main {
     box-shadow: rgba(39, 65, 86, 0.16) 0px 3px 6px,
         rgba(39, 65, 86, 0.23) 0px 3px 6px;
 
-    // input {
-    //     font-family: Lato, serif;
-    //     font-size: 1.2rem;
-    //     background-color: #fbfcff;
-    //     border: inherit;
-    //     border-radius: 0.5rem 0.5rem 0 0;
-    //     width: 99%;
-    //     padding: 0 1%;
-    //     height: 10%;
+    display: flex;
+    flex-direction: column;
 
-    //     &:focus {
-    //         outline: none;
-    //     }
-    // }
-}
-
-@media (max-width: 800px) {
-    main {
+    @media (max-width: 800px) {
         width: 97vw;
         height: 97vh;
     }
