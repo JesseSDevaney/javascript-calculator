@@ -1,5 +1,5 @@
 import React from "react";
-import { evaluate } from 'mathjs';
+import { evaluate, round } from 'mathjs';
 import './App.scss';
 import Display from './Display';
 
@@ -49,6 +49,7 @@ class App extends React.Component {
     this.executeExpression = this.executeExpression.bind(this);
     this.handleFocusedInput = this.handleFocusedInput.bind(this);
     this.handleUnfocusedInput = this.handleUnfocusedInput.bind(this);
+    this.restorePrevious = this.restorePrevious.bind(this);
     this.throwMalformedError = this.throwMalformedError.bind(this);
     this.updateCursorIndex = this.updateCursorIndex.bind(this);
     this.updateExpression = this.updateExpression.bind(this);
@@ -76,7 +77,7 @@ class App extends React.Component {
         this.updateVariables(variablesAfter);
       }
       if (result !== "") {
-        this.updateResult(result);
+        this.updateResult(round(result, 4).toString());
       }
     }
     catch (error) {
@@ -94,8 +95,13 @@ class App extends React.Component {
     let { calculation: { result }, isInputUnfocused } = this.state;
 
     if (key === "Enter") {
-      document.getElementById("input").blur();
-      this.executeExpression();
+      if (result === ""){
+          document.getElementById("input").blur();
+          this.executeExpression();
+      } else {
+        this.updateCursorIndex(result.length);
+        this.updateExpression(result);
+      }
     }
     else if (shouldCaptureKey(key) && isInputUnfocused){
       let {calculation: {expression}, cursorIndex} = this.state;
@@ -138,12 +144,30 @@ class App extends React.Component {
           this.updateCursorIndex(expression.length);
           break;
         default:
-          newExpression = expression.slice(0, cursorIndex) + key + expression.slice(cursorIndex)
-          this.updateCursorIndex(cursorIndex + 1);
-          this.updateExpression(newExpression);
+          if(result === ""){
+            newExpression = expression.slice(0, cursorIndex) + key + expression.slice(cursorIndex)
+            this.updateCursorIndex(cursorIndex + 1);
+            this.updateExpression(newExpression);
+          }
+          else {
+            const numList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+            if (numList.includes(key)){
+              this.updateCursorIndex(1);
+              this.updateExpression(key);
+            } else {
+              newExpression = result + key;
+              this.updateCursorIndex(newExpression.length);
+              this.updateExpression(newExpression);
+            }
+          }
           break;
       }
     }
+  }
+
+  restorePrevious(expression){
+    this.updateCursorIndex(expression.length);
+    this.updateExpression(expression);
   }
 
   throwMalformedError(){
@@ -210,7 +234,8 @@ class App extends React.Component {
           calculation={calculation}
           cursorIndex={cursorIndex}
           isInputUnfocused={isInputUnfocused}
-          handleChange={this.handleFocusedInput} 
+          handleChange={this.handleFocusedInput}
+          restorePrevious={this.restorePrevious}
           updateFocus={this.updateFocus}
           />
           

@@ -1,58 +1,82 @@
 %displays {
     position: absolute;
-    font-family: Lato, serif;
-    font-size: 1.2rem;
+    font-family: inherit;
+    font-size: inherit;
     border: inherit;
     border-radius: 0.5rem 0.5rem 0 0;
     padding: 0 1%;
     width: 100%;
-    height: 3rem;
+    height: 100%;
+}
+
+%center-and-max-height {
+    height: 90%;
+    display: grid;
+    align-content: center;
+    border-radius: 0.5rem;
+    overflow: hidden;
 }
 
 #display {
     position: relative;
     width: 100%;
     height: 20%;
+    font-family: Lato, serif;
+    font-size: 1.2rem;
+    background-color: #fbfcff;
 
-    #input {
+    #result-container {
         @extend %displays;
+        width: 98%;
+        z-index: 3;
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+        align-items: center;
 
-        &:focus {
-            outline: none;
+        #expression {
+            flex: 1 1 70%;
+            @extend %center-and-max-height;
+            cursor: pointer;
+            padding: 0 1%;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 6px,
+                rgba(0, 0, 0, 0.23) 0px 1px 6px;
+        }
+
+        #equals {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 0 0 1rem;
+            @extend %center-and-max-height;
+        }
+
+        #result {
+            flex: 1 1 25%;
+            @extend %center-and-max-height;
+            cursor: pointer;
+            padding: 0 1%;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 6px,
+                rgba(0, 0, 0, 0.23) 0px 1px 6px;
         }
     }
 
-    #unfocused-input-display {
-        @extend %displays;
-        display: grid;
-        align-content: center;
-        color: black;
-        background-color: #fbfcff;
+    #malformed-expression {
+        position: absolute;
+        bottom: 0.5rem;
+        left: 0.5rem;
+        z-index: 3;
+        color: #812519;
+        font-size: 0.9rem;
+        margin: 0;
+        padding: 0;
+    }
 
-        pre {
-            font-family: inherit;
-            font-size: inherit;
-            margin: 0;
-        }
+    @media (max-width: 400px) {
+        font-size: 1.1rem;
 
-        #cursor {
-            margin: 0 -2px 0 -2px;
-            font-weight: 300;
-            animation-name: blink;
-            animation-duration: 1s;
-            animation-iteration-count: infinite;
-        }
-
-        @keyframes blink {
-            0% {
-                opacity: 0.2;
-            }
-            50% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.2;
-            }
+        #malformed-expression {
+            font-size: 0.7rem;
         }
     }
 }
