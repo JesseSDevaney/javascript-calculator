@@ -1,5 +1,5 @@
 import React from "react";
-import { evaluate, round } from 'mathjs';
+import { evaluate } from 'mathjs';
 import './App.scss';
 import Display from './Display';
 
@@ -77,7 +77,7 @@ class App extends React.Component {
         this.updateVariables(variablesAfter);
       }
       if (result !== "") {
-        this.updateResult(round(result, 4).toString());
+        this.updateResult(result);
       }
     }
     catch (error) {
@@ -99,8 +99,9 @@ class App extends React.Component {
           document.getElementById("input").blur();
           this.executeExpression();
       } else {
-        this.updateCursorIndex(result.length);
-        this.updateExpression(result);
+        const resultStr = result.toString();
+        this.updateCursorIndex(resultStr.length);
+        this.updateExpression(resultStr);
       }
     }
     else if (shouldCaptureKey(key) && isInputUnfocused){
@@ -155,7 +156,8 @@ class App extends React.Component {
               this.updateCursorIndex(1);
               this.updateExpression(key);
             } else {
-              newExpression = result + key;
+              const resultStr = result.toString();
+              newExpression = resultStr + key;
               this.updateCursorIndex(newExpression.length);
               this.updateExpression(newExpression);
             }

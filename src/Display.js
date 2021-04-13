@@ -1,3 +1,4 @@
+import { round } from "mathjs";
 import './Display.scss';
 import InputContainer from "./InputContainer";
 
@@ -15,20 +16,22 @@ export function Display(props){
 
     // TODO: Implement display result
     function displayResult(expression, result){
+        const roundedResult = round(result, 4).toString();
 
         function restoreExpression(){
             restorePrevious(expression);
         }
 
         function restoreResult(){
-            restorePrevious(result);
+            const resultStr = result.toString();
+            restorePrevious(resultStr);
         }
 
         return (
             <div id="result-container">
                 <div id="expression" onClick={restoreExpression}>{expression}</div>
                 <div id="equals">=</div>
-                <div id="result" onClick={restoreResult}>{result}</div>
+                <div id="result" onClick={restoreResult}>{roundedResult}</div>
             </div>
         );
     }
