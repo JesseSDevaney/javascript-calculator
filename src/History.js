@@ -103,8 +103,10 @@ class History extends React.Component {
 
     if(!isMobile){
       style["order"] = "-1";
+      style["height"] = "20%";
     } else if(altMenuToggled) {
       style["order"] = "2";
+      style["height"] = "40%";
     } else {
       style["display"] = "none";
     }
