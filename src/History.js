@@ -95,11 +95,22 @@ class History extends React.Component {
   }
 
   render() {
+    const {altMenuToggled, isMobile} = this.props;
     const history = this.state.history;
     const previousCalculations = history.map((calculation) => this.displayCalculation(calculation));
 
+    const style = {};
+
+    if(!isMobile){
+      style["order"] = "-1";
+    } else if(altMenuToggled) {
+      style["order"] = "2";
+    } else {
+      style["display"] = "none";
+    }
+
     return (
-      <div id="history-container">
+      <div id="history-container" style={style}>
         {previousCalculations}
       </div>
     );

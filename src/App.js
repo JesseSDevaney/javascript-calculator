@@ -41,9 +41,11 @@ class App extends React.Component {
   constructor(){
     super();
     this.state = {
+      altMenuToggled: false,
       calculation: DEFAULT_CALCULATION,
       cursorIndex: 0,
       isInputUnfocused: true,
+      isMobile: false,
       variables: {},
     };
 
@@ -51,6 +53,7 @@ class App extends React.Component {
     this.handleFocusedInput = this.handleFocusedInput.bind(this);
     this.handleUnfocusedInput = this.handleUnfocusedInput.bind(this);
     this.restorePrevious = this.restorePrevious.bind(this);
+    this.setMobile = this.setMobile.bind(this);
     this.throwMalformedError = this.throwMalformedError.bind(this);
     this.updateCursorIndex = this.updateCursorIndex.bind(this);
     this.updateExpression = this.updateExpression.bind(this);
@@ -61,6 +64,9 @@ class App extends React.Component {
 
   componentDidMount(){
     document.addEventListener("keydown", this.handleUnfocusedInput);
+    const mediaQuery = window.matchMedia("(max-width: 600px)");
+    this.setMobile(mediaQuery);
+    mediaQuery.addEventListener("change", this.setMobile);
   }
 
   componentWillUnmount(){
@@ -173,6 +179,14 @@ class App extends React.Component {
     this.updateExpression(expression);
   }
 
+  setMobile(mediaQuery){
+    if(mediaQuery.matches){
+      this.setState({isMobile: true});
+    } else {
+      this.setState({isMobile: false});
+    }
+  }
+
   throwMalformedError(){
     this.setState(prevState => {
       const oldCalculation = prevState.calculation;
@@ -228,7 +242,7 @@ class App extends React.Component {
   
 
   render() {
-    const { calculation, cursorIndex, isInputUnfocused} = this.state;
+    const { altMenuToggled, calculation, cursorIndex, isInputUnfocused, isMobile} = this.state;
     const { expression, result } = calculation;
 
     // TODO: Implement other components
@@ -244,7 +258,9 @@ class App extends React.Component {
           />
         
         <History 
+          altMenuToggled={altMenuToggled}
           expression={expression}
+          isMobile={isMobile}
           restorePrevious={this.restorePrevious}
           result={result}
         />
