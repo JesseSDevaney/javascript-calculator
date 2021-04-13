@@ -28,19 +28,19 @@
     #result-container {
         @extend %displays;
         width: 98%;
+        height: 100%;
         z-index: 3;
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         gap: 5px;
         align-items: center;
 
         #expression {
-            flex: 1 1 70%;
+            flex: 1 1 65%;
             @extend %center-and-max-height;
             cursor: pointer;
-            padding: 0 1%;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 6px,
-                rgba(0, 0, 0, 0.23) 0px 1px 6px;
+            word-wrap: break-word;
         }
 
         #equals {
@@ -52,12 +52,9 @@
         }
 
         #result {
-            flex: 1 1 25%;
+            flex: 1 1 35%;
             @extend %center-and-max-height;
             cursor: pointer;
-            padding: 0 1%;
-            box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 6px,
-                rgba(0, 0, 0, 0.23) 0px 1px 6px;
         }
     }
 
@@ -77,6 +74,8 @@
 
         #malformed-expression {
             font-size: 0.7rem;
+            bottom: 0.2rem;
+            left: 0.2rem;
         }
     }
 }
