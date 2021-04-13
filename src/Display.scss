@@ -53,6 +53,17 @@
     }
   }
 
+  #display-title {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    z-index: 4;
+    color: #4a6275;
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+
   #malformed-expression {
     position: absolute;
     bottom: 0.5rem;
@@ -66,6 +77,12 @@
 
   @media (max-width: 400px) {
     font-size: 1.1rem;
+
+    #display-title {
+      font-size: 0.8rem;
+      top: 0.2rem;
+      left: 0.2rem;
+    }
 
     #malformed-expression {
       font-size: 0.7rem;
