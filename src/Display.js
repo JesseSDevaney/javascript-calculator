@@ -11,10 +11,6 @@ export function Display(props){
         updateFocus
     } = props;
 
-
-
-
-    // TODO: Implement display result
     function displayResult(expression, result){
         const roundedResult = round(result, 4).toString();
 
@@ -28,10 +24,10 @@ export function Display(props){
         }
 
         return (
-            <div id="result-container">
-                <div id="expression" onClick={restoreExpression}>{expression}</div>
-                <div id="equals">=</div>
-                <div id="result" onClick={restoreResult}>{roundedResult}</div>
+            <div className="result-container">
+                <div className="expression" onClick={restoreExpression}>{expression}</div>
+                <div className="equals">=</div>
+                <div className="result" onClick={restoreResult}>{roundedResult}</div>
             </div>
         );
     }

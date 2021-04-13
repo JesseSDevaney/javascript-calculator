@@ -10,67 +10,50 @@
   cursor: pointer;
 
   &:hover {
-    background-color: #d0d3df;
+    background-color: #d1d6df;
   }
 }
 
-#display {
+#history-container {
   position: relative;
   width: 100%;
   height: 20%;
   font-family: Lato, serif;
   font-size: 1.2rem;
-  background-color: #fbfcff;
-  order: 2; // ! CHANGE WHEN NEED TO MOVE AROUND DEPENDING ON TOGGLES FOR EACH COMPONENT
+  background-color: #c4cad4;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  box-shadow: inset 0px -1px 0px 0px rgb(20 20 20 / 5%),
+    inset 0px -2px 3px 0px rgb(20 20 20 / 10%);
+  order: -1; // ! CHANGE WHEN NEED TO MOVE AROUND DEPENDING ON TOGGLES FOR EACH COMPONENT
 
   .result-container {
-    position: absolute;
-    width: 100%;
-    height: 100%;
     font-family: inherit;
     font-size: inherit;
-    z-index: 3;
+    width: 100%;
+    height: 50%;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    gap: 5px;
+    border-bottom: 1px solid rgb(20 20 20 / 10%);
 
     .expression {
       @extend %center-and-max-height;
       @extend %expression-and-result;
       flex: 1 1 65%;
+      border-right: 1px solid rgb(20 20 20 / 10%);
     }
 
     .equals {
       @extend %center-and-max-height;
       flex: 0 0 1rem;
-      padding: 0 0.5rem;
     }
 
     .result {
       @extend %center-and-max-height;
       @extend %expression-and-result;
       flex: 1 1 35%;
-    }
-  }
-
-  #malformed-expression {
-    position: absolute;
-    bottom: 0.5rem;
-    left: 0.5rem;
-    z-index: 3;
-    color: #812519;
-    font-size: 0.9rem;
-    margin: 0;
-    padding: 0;
-  }
-
-  @media (max-width: 400px) {
-    font-size: 1.1rem;
-
-    #malformed-expression {
-      font-size: 0.7rem;
-      bottom: 0.2rem;
-      left: 0.2rem;
+      border-left: 1px solid rgb(20 20 20 / 10%);
     }
   }
 }

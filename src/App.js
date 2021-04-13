@@ -2,6 +2,7 @@ import React from "react";
 import { evaluate } from 'mathjs';
 import './App.scss';
 import Display from './Display';
+import History from './History';
 
 const DEFAULT_CALCULATION = {
   expression: "",
@@ -228,6 +229,7 @@ class App extends React.Component {
 
   render() {
     const { calculation, cursorIndex, isInputUnfocused} = this.state;
+    const { expression, result } = calculation;
 
     // TODO: Implement other components
     return (
@@ -240,6 +242,12 @@ class App extends React.Component {
           restorePrevious={this.restorePrevious}
           updateFocus={this.updateFocus}
           />
+        
+        <History 
+          expression={expression}
+          restorePrevious={this.restorePrevious}
+          result={result}
+        />
           
       {/* REAL CODE */}
         {/* When screen size greater than ... */}

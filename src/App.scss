@@ -1,19 +1,19 @@
 main {
-    background: #274156;
-    width: 65vh;
-    height: 95vh;
-    max-height: 750px;
-    max-width: 515px;
-    overflow: hidden;
-    border-radius: 0.5rem;
-    box-shadow: rgba(39, 65, 86, 0.16) 0px 3px 6px,
-        rgba(39, 65, 86, 0.23) 0px 3px 6px;
+  background: #274156;
+  width: 65vh;
+  height: 95vh;
+  max-height: 750px;
+  max-width: 515px;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: rgba(39, 65, 86, 0.16) 0px 3px 6px,
+    rgba(39, 65, 86, 0.23) 0px 3px 6px;
 
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-    @media (max-width: 800px) {
-        width: 97vw;
-        height: 97vh;
-    }
+  @media (max-width: 800px) {
+    width: 97vw;
+    height: 97vh;
+  }
 }
