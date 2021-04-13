@@ -96,7 +96,6 @@ class History extends React.Component {
 
   render() {
     const history = this.state.history;
-
     const previousCalculations = history.map((calculation) => this.displayCalculation(calculation));
 
     return (

@@ -36,6 +36,7 @@ export function Display(props){
 
     return (
         <div id="display">
+            <p id="display-title">Display</p>
             {result === "" && 
                 <InputContainer 
                     cursorIndex={cursorIndex}

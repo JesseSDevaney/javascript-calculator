@@ -43,8 +43,8 @@ class App extends React.Component {
     this.state = {
       calculation: DEFAULT_CALCULATION,
       cursorIndex: 0,
+      isInputUnfocused: true,
       variables: {},
-      isInputUnfocused: true
     };
 
     this.executeExpression = this.executeExpression.bind(this);
