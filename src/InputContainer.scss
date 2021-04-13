@@ -2,19 +2,19 @@
   position: absolute;
   font-family: inherit;
   font-size: inherit;
-  width: 100%;
+  width: calc(100% - 1rem);
   height: 100%;
   padding: 0 0.5rem;
 }
 
 #input-container {
-  position: absolute;
+  position: relative;
   height: 100%;
 
   #input {
     @extend %displays;
     border: none;
-    z-index: 2;
+    z-index: 3;
 
     &:focus {
       outline: none;

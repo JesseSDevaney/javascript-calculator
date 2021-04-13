@@ -12,6 +12,9 @@ class History extends React.Component {
 
     this.appendCalculation = this.appendCalculation.bind(this);
     this.displayCalculation = this.displayCalculation.bind(this);
+    this.findCalculationById = this.findCalculationById.bind(this);
+    this.restoreExpression = this.restoreExpression.bind(this);
+    this.restoreResult = this.restoreResult.bind(this);
   }
 
   appendCalculation(){
@@ -55,29 +58,40 @@ class History extends React.Component {
 
   displayCalculation({id, expression, result}){
     const roundedResult = round(result, 4).toString();
-    const restorePrevious = this.props.restorePrevious;
-
-    function restoreExpression(){
-        restorePrevious(expression);
-    }
-
-    function restoreResult(){
-        const resultStr = result.toString();
-        restorePrevious(resultStr);
-    }
 
     return (
-        <div className="result-container" id={id} key={id}>
-            <div className="expression" onClick={restoreExpression}>{expression}</div>
+        <div className="result-container" id={"calculation"+id} key={id}>
+            <div className="expression" onClick={this.restoreExpression}>{expression}</div>
             <div className="equals">=</div>
-            <div className="result" onClick={restoreResult}>{roundedResult}</div>
+            <div className="result" onClick={this.restoreResult}>{roundedResult}</div>
         </div>
     );
+  }
+
+  findCalculationById(calculationId){
+    const calculation = this.state.history.filter(({ id }) => calculationId === id);
+    return calculation[0];
   }
 
   scrollToBottom(){
     const historyContainer = document.getElementById("history-container");
     historyContainer.scrollTop = historyContainer.scrollHeight;
+  }
+
+  restoreExpression(event){
+    let id = event.target.parentNode.id.replace("calculation", "");
+    id = parseInt(id);
+    const { expression } = this.findCalculationById(id);
+
+    this.props.restorePrevious(expression);
+  }
+
+  restoreResult(event){
+    let id = event.target.parentNode.id.replace("calculation", "");
+    id = parseInt(id);
+    const { result } = this.findCalculationById(id);
+
+    this.props.restorePrevious(result.toString());
   }
 
   render() {
