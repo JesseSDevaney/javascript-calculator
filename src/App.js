@@ -3,6 +3,7 @@ import { evaluate } from 'mathjs';
 import './App.scss';
 import Display from './Display';
 import History from './History';
+import ButtonContainer from './ButtonContainer';
 
 const DEFAULT_CALCULATION = {
   expression: "",
@@ -50,6 +51,7 @@ class App extends React.Component {
     };
 
     this.executeExpression = this.executeExpression.bind(this);
+    this.handleButtonPress = this.handleButtonPress.bind(this);
     this.handleFocusedInput = this.handleFocusedInput.bind(this);
     this.handleUnfocusedInput = this.handleUnfocusedInput.bind(this);
     this.restorePrevious = this.restorePrevious.bind(this);
@@ -90,6 +92,44 @@ class App extends React.Component {
     catch (error) {
       console.error(error);
       this.throwMalformedError();
+    }
+  }
+
+  handleButtonPress(buttonId){
+    const { calculation: { expression, result }, cursorIndex } = this.state;
+    let buttonText = "";
+
+    switch(buttonId){
+      case "back":
+        // TODO: Implement reloading the previous calculation
+        break;
+      case "clear":
+        // TODO: Implement removing only the most recent number or operator in the else portion
+        if (result !== ""){
+          this.updateCursorIndex(0)
+          this.updateExpression("");
+        }
+        break;
+      case "evaluate":
+        if (result === ""){
+          this.executeExpression();
+        } else {
+          const resultStr = result.toString();
+          this.updateCursorIndex(resultStr.length);
+          this.updateExpression(resultStr);
+        }
+        break;
+      case "alt-menu":
+        this.toggleMenu();
+        break;
+      case "menu":
+        this.toggleMenu();
+        break;
+      default:
+        buttonText = document.getElementById(buttonId).textContent;
+        this.updateCursorIndex(cursorIndex + buttonText.length)
+        this.updateExpression(expression + buttonText)
+        break;
     }
   }
 
@@ -187,6 +227,12 @@ class App extends React.Component {
     }
   }
 
+  toggleMenu(){
+    this.setState(prevState => ({
+      altMenuToggled: !prevState.altMenuToggled
+    }));
+  }
+
   throwMalformedError(){
     this.setState(prevState => {
       const oldCalculation = prevState.calculation;
@@ -263,6 +309,12 @@ class App extends React.Component {
           isMobile={isMobile}
           restorePrevious={this.restorePrevious}
           result={result}
+        />
+
+        <ButtonContainer 
+          altMenuToggled={altMenuToggled}
+          isMobile={isMobile}
+          sendButtonPress={this.handleButtonPress}
         />
           
       {/* REAL CODE */}
