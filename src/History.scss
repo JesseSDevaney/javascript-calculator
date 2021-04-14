@@ -5,8 +5,9 @@
 }
 
 %expression-and-result {
-  overflow: hidden;
   padding-left: 0.5rem;
+  padding-right: 0.1rem;
+  overflow: hidden;
   cursor: pointer;
 
   &:hover {
@@ -14,11 +15,17 @@
   }
 }
 
+%overflow-control {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 #history-container {
   position: relative;
   width: 100%;
   font-family: Lato, serif;
-  font-size: 1.2rem;
+  font-size: 0.9rem;
   background-color: #c4cad4;
   overflow-y: scroll;
   overflow-x: hidden;
@@ -40,6 +47,10 @@
       @extend %expression-and-result;
       flex: 1 1 65%;
       border-right: 1px solid rgb(20 20 20 / 10%);
+
+      p {
+        @extend %overflow-control;
+      }
     }
 
     .equals {
@@ -52,6 +63,10 @@
       @extend %expression-and-result;
       flex: 1 1 35%;
       border-left: 1px solid rgb(20 20 20 / 10%);
+
+      p {
+        @extend %overflow-control;
+      }
     }
   }
 }

@@ -58,9 +58,9 @@ class History extends React.Component {
 
     return (
         <div className="result-container" id={"calculation"+id} key={id}>
-            <div className="expression" onClick={this.restoreExpression}>{expression}</div>
+            <div className="expression" onClick={this.restoreExpression}><p>{expression}</p></div>
             <div className="equals">=</div>
-            <div className="result" onClick={this.restoreResult}>{roundedResult}</div>
+            <div className="result" onClick={this.restoreResult}><p>{roundedResult}</p></div>
         </div>
     );
   }
