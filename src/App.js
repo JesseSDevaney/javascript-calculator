@@ -66,13 +66,14 @@ class App extends React.Component {
 
   componentDidMount(){
     document.addEventListener("keydown", this.handleUnfocusedInput);
-    const mediaQuery = window.matchMedia("(max-width: 600px)");
-    this.setMobile(mediaQuery);
-    mediaQuery.addEventListener("change", this.setMobile);
+    this.mediaQuery = window.matchMedia("(max-width: 600px)");
+    this.setMobile(this.mediaQuery);
+    this.mediaQuery.addEventListener("change", this.setMobile);
   }
 
   componentWillUnmount(){
     document.removeEventListener("keydown", this.handleUnfocusedInput);
+    this.mediaQuery.removeEventListener("change", this.setMobile);
   }
 
   executeExpression(){
