@@ -1,11 +1,5 @@
 @use "displays";
 
-%center-and-max-height {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
 $history-hover-color: #d1d6df;
 
 #history-container {

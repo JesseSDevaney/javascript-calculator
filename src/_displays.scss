@@ -10,3 +10,9 @@
     text-overflow: ellipsis;
   }
 }
+
+%center-and-max-height {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}

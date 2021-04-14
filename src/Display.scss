@@ -1,11 +1,5 @@
 @use "displays";
 
-%center-and-max-height {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
 $display-hover-color: #d0d3df;
 
 #display {
