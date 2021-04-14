@@ -44,7 +44,9 @@ class App extends React.Component {
     this.state = {
       altMenuToggled: false,
       calculation: DEFAULT_CALCULATION,
+      calculationCount: 0,
       cursorIndex: 0,
+      history: [],
       isInputUnfocused: true,
       isMobile: false,
       variables: {},
@@ -81,7 +83,7 @@ class App extends React.Component {
         this.updateVariables(variablesAfter);
       }
       if (result !== "") {
-        this.updateResult(result);
+        this.submitResult(result);
       }
     }
     catch (error) {
@@ -172,13 +174,13 @@ class App extends React.Component {
           if (cursorIndex > 0){
             this.updateCursorIndex(cursorIndex - 1);
           }
-          this.updateResult("");
+          this.updateExpression(expression);
           break;
         case "ArrowRight":
           if (cursorIndex < expression.length){
             this.updateCursorIndex(cursorIndex + 1);
           }
-          this.updateResult("");
+          this.updateExpression(expression);
           break;
         case "Home":
           this.updateCursorIndex(0);
@@ -222,6 +224,21 @@ class App extends React.Component {
     }
   }
 
+  submitResult(result){
+    this.setState(prevState => {
+      const oldCalculation = prevState.calculation;
+      const calculationUpdate = {
+        isMalformed: false,
+        result
+      };
+
+      const newCalculation = Object.assign({}, oldCalculation, calculationUpdate);
+
+      return {calculation: newCalculation};
+    });
+    this.updateHistory();
+  }
+
   toggleMenu(){
     this.setState(prevState => ({
       altMenuToggled: !prevState.altMenuToggled
@@ -262,19 +279,27 @@ class App extends React.Component {
     }));
   }
 
-  updateResult(result){
-    // called on a successfully executed expression
+  updateHistory(){
     this.setState(prevState => {
-      const oldCalculation = prevState.calculation;
-      const calculationUpdate = {
-        isMalformed: false,
-        result
-      };
+      const { 
+        calculation: { expression, result },
+        calculationCount,
+        history
+      } = prevState;
 
-      const newCalculation = Object.assign({}, oldCalculation, calculationUpdate);
+      const newHistory = [...history];
+      newHistory.push({
+        id: calculationCount + 1,
+        expression: expression,
+        result: result
+      });
 
-      return {calculation: newCalculation};
-    });
+      if(newHistory.length > 20){
+        newHistory.shift();
+      }
+
+      return {history: newHistory, calculationCount: calculationCount + 1};
+    })
   }
 
   updateVariables(variables){
@@ -283,8 +308,14 @@ class App extends React.Component {
   
 
   render() {
-    const { altMenuToggled, calculation, cursorIndex, isInputUnfocused, isMobile} = this.state;
-    const { expression, result } = calculation;
+    const { 
+      altMenuToggled, 
+      calculation, 
+      cursorIndex, 
+      history, 
+      isInputUnfocused, 
+      isMobile
+    } = this.state;
 
     // TODO: Implement other components
     return (
@@ -300,10 +331,9 @@ class App extends React.Component {
         
         <History 
           altMenuToggled={altMenuToggled}
-          expression={expression}
+          history={history}
           isMobile={isMobile}
           restorePrevious={this.restorePrevious}
-          result={result}
         />
 
         <ButtonContainer 
