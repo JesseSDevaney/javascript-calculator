@@ -72,6 +72,16 @@ class App extends React.Component {
     this.mediaQuery.removeEventListener("change", this.setMobile);
   }
 
+  clearMemory(){
+    this.setState({
+      calculation: DEFAULT_CALCULATION,
+      calculationCount: 0,
+      cursorIndex: 0,
+      history: [],
+      variables: {}
+    });
+  }
+
   executeExpression(){
     const { calculation: {expression}, variables } = this.state;
     let result = "";
@@ -92,28 +102,54 @@ class App extends React.Component {
     }
   }
 
+  getPreviousCalculation(){
+    this.setState(prevState => {
+      const { calculation: { result }, history } = prevState;
+
+      if (result === "" && history.length !== 0){
+        let { expression, result } = history.slice().pop();
+        let newCalculation = {
+          expression,
+          isMalformed: false,
+          result
+        };
+        return {calculation: newCalculation};
+      }
+      else {
+        return {};
+      }
+
+    })
+  }
+
   handleButtonPress(buttonId){
     const { calculation: { expression, result }, cursorIndex } = this.state;
-    let buttonText = "";
+    let buttonText = document.getElementById(buttonId).textContent;
+    let newExpression = "";
 
     switch(buttonId){
       case "back":
-        // TODO: Implement reloading the previous calculation
+        this.getPreviousCalculation();
+        break;
+      case "all clear":
+        this.clearMemory();
         break;
       case "clear":
-        // TODO: Implement removing only the most recent number or operator in the else portion
         if (result !== ""){
-          this.updateCursorIndex(0)
-          this.updateExpression("");
+          newExpression = "";
+        } else {
+          newExpression = expression.replace(/([^\w]|\w+|sqrt\()$/, "");
         }
+        this.updateCursorIndex(newExpression.length);
+        this.updateExpression(newExpression)
         break;
       case "evaluate":
         if (result === ""){
           this.executeExpression();
         } else {
-          const resultStr = result.toString();
-          this.updateCursorIndex(resultStr.length);
-          this.updateExpression(resultStr);
+          newExpression = result.toString();
+          this.updateCursorIndex(newExpression.length);
+          this.updateExpression(newExpression);
         }
         break;
       case "alt-menu":
@@ -122,10 +158,45 @@ class App extends React.Component {
       case "menu":
         this.toggleMenu();
         break;
+      case "sqrt":
+        if (result === ""){
+          newExpression = expression + buttonText + "(";
+        } else {
+          newExpression = buttonText + "(" + result;
+        }
+        this.updateCursorIndex(newExpression.length)
+        this.updateExpression(newExpression)
+        break;
+      case "left-parenthesis":
+        if (result === ""){
+          newExpression = expression + buttonText;
+        } else {
+          newExpression = buttonText + result;
+        }
+        this.updateCursorIndex(newExpression.length)
+        this.updateExpression(newExpression)
+        break;
+      case "add": //intentional fall-through
+      case "subtract":
+      case "multiply":
+      case "divide":
+      case "exponential":
+        if(result === ""){
+          newExpression = expression + buttonText;
+        } else {
+          newExpression = result + buttonText;
+        }
+        this.updateCursorIndex(newExpression.length)
+        this.updateExpression(newExpression)
+        break;
       default:
-        buttonText = document.getElementById(buttonId).textContent;
-        this.updateCursorIndex(cursorIndex + buttonText.length)
-        this.updateExpression(expression + buttonText)
+        if(result === ""){
+          newExpression = expression + buttonText;
+        } else {
+          newExpression = buttonText;
+        }
+        this.updateCursorIndex(newExpression.length)
+        this.updateExpression(newExpression)
         break;
     }
   }
@@ -316,6 +387,7 @@ class App extends React.Component {
       isInputUnfocused, 
       isMobile
     } = this.state;
+    const expression = calculation.expression;
 
     // TODO: Implement other components
     return (
@@ -338,6 +410,7 @@ class App extends React.Component {
 
         <ButtonContainer 
           altMenuToggled={altMenuToggled}
+          expression={expression}
           isMobile={isMobile}
           sendButtonPress={this.handleButtonPress}
         />

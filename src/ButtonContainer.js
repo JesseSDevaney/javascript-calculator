@@ -21,7 +21,7 @@ const DESKTOP_BUTTONS = {
   "left-parenthesis": "(",
   "right-parenthesis": ")",
   "exponential": "^",
-  "sqrt": "sqrt(",
+  "sqrt": "sqrt",
   "equals": "=",
   "evaluate": "Evaluate"
 }
@@ -44,7 +44,7 @@ const MOBILE_MENU_BUTTONS = {
     "multiply": "*",
     "clear": "C",
     "exponential": "^",
-    "sqrt": "sqrt(",
+    "sqrt": "sqrt",
     "equals": "=",
     "evaluate": "Evaluate",
     "alt-menu": "alt-menu",
@@ -59,7 +59,7 @@ const MOBILE_ALT_MENU_BUTTONS = {
 
 
 export function ButtonContainer(props) {
-  const { altMenuToggled, isMobile, sendButtonPress } = props;
+  const { altMenuToggled, expression, isMobile, sendButtonPress } = props;
 
   const getButtons = (altMenuToggled, isMobile) => {
     if(!isMobile){
@@ -96,8 +96,13 @@ export function ButtonContainer(props) {
 
     return buttonKey.map(key => {
         if(buttons.hasOwnProperty(key)){
-          const buttonText = buttons[key];
+          let buttonText = buttons[key];
           const style = {"gridArea": key};
+
+          if(key === "clear" && expression === ""){
+            key = "all clear";
+            buttonText = "AC";
+          }
 
           return (
             <button 
