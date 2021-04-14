@@ -10,9 +10,6 @@ class History extends React.Component {
       calculationCount: 0
     }
 
-    this.appendCalculation = this.appendCalculation.bind(this);
-    this.displayCalculation = this.displayCalculation.bind(this);
-    this.findCalculationById = this.findCalculationById.bind(this);
     this.restoreExpression = this.restoreExpression.bind(this);
     this.restoreResult = this.restoreResult.bind(this);
   }

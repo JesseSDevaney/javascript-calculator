@@ -50,18 +50,12 @@ class App extends React.Component {
       variables: {},
     };
 
-    this.executeExpression = this.executeExpression.bind(this);
     this.handleButtonPress = this.handleButtonPress.bind(this);
     this.handleFocusedInput = this.handleFocusedInput.bind(this);
     this.handleUnfocusedInput = this.handleUnfocusedInput.bind(this);
     this.restorePrevious = this.restorePrevious.bind(this);
     this.setMobile = this.setMobile.bind(this);
-    this.throwMalformedError = this.throwMalformedError.bind(this);
-    this.updateCursorIndex = this.updateCursorIndex.bind(this);
-    this.updateExpression = this.updateExpression.bind(this);
     this.updateFocus = this.updateFocus.bind(this);
-    this.updateResult = this.updateResult.bind(this);
-    this.updateVariables = this.updateVariables.bind(this);
   }
 
   componentDidMount(){

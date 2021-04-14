@@ -4,7 +4,8 @@ import InputContainer from "./InputContainer";
 
 export function Display(props){
     const { expression, isMalformed, result } = props.calculation;
-    const { isInputUnfocused, 
+    const { 
+        isInputUnfocused, 
         cursorIndex, 
         handleChange, 
         restorePrevious,
