@@ -26,9 +26,9 @@ export function Display(props){
 
         return (
             <div className="result-container">
-                <div className="expression" onClick={restoreExpression}>{expression}</div>
+                <div className="expression" onClick={restoreExpression}><p>{expression}</p></div>
                 <div className="equals">=</div>
-                <div className="result" onClick={restoreResult}>{roundedResult}</div>
+                <div className="result" onClick={restoreResult}><p>{roundedResult}</p></div>
             </div>
         );
     }

@@ -1,18 +1,12 @@
+@use "displays";
+
 %center-and-max-height {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-%expression-and-result {
-  overflow: hidden;
-  padding-left: 0.5rem;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #d0d3df;
-  }
-}
+$display-hover-color: #d0d3df;
 
 #display {
   position: relative;
@@ -37,6 +31,10 @@
       @extend %center-and-max-height;
       @extend %expression-and-result;
       flex: 1 1 65%;
+
+      &:hover {
+        background-color: $display-hover-color;
+      }
     }
 
     .equals {
@@ -49,6 +47,10 @@
       @extend %center-and-max-height;
       @extend %expression-and-result;
       flex: 1 1 35%;
+
+      &:hover {
+        background-color: $display-hover-color;
+      }
     }
   }
 

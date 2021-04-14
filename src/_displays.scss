@@ -1,0 +1,12 @@
+%expression-and-result {
+  overflow: hidden;
+  padding-left: 0.5rem;
+  padding-right: 0.1rem;
+  cursor: pointer;
+
+  p {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}

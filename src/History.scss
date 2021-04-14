@@ -1,25 +1,12 @@
+@use "displays";
+
 %center-and-max-height {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-%expression-and-result {
-  padding-left: 0.5rem;
-  padding-right: 0.1rem;
-  overflow: hidden;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #d1d6df;
-  }
-}
-
-%overflow-control {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-}
+$history-hover-color: #d1d6df;
 
 #history-container {
   position: relative;
@@ -48,8 +35,8 @@
       flex: 1 1 65%;
       border-right: 1px solid rgb(20 20 20 / 10%);
 
-      p {
-        @extend %overflow-control;
+      &:hover {
+        background-color: $history-hover-color;
       }
     }
 
@@ -64,8 +51,8 @@
       flex: 1 1 35%;
       border-left: 1px solid rgb(20 20 20 / 10%);
 
-      p {
-        @extend %overflow-control;
+      &:hover {
+        background-color: $history-hover-color;
       }
     }
   }
