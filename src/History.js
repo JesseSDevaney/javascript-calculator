@@ -51,9 +51,9 @@ class History extends React.Component {
       } else if (newExpression !== prevExpression){
         this.appendCalculation()
       }
+      this.scrollToBottom();
     }
 
-    this.scrollToBottom();
   }
 
   displayCalculation({id, expression, result}){
