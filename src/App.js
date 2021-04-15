@@ -124,9 +124,8 @@ class App extends React.Component {
     })
   }
 
-  handleButtonPress(buttonId){
+  handleButtonPress(buttonId, buttonText){
     const { calculation: { expression, result } } = this.state;
-    let buttonText = document.getElementById(buttonId).textContent;
     let newExpression = "";
 
     switch(buttonId){

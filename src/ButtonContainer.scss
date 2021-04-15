@@ -3,6 +3,7 @@ $number-button-color: #8592b1;
 $operator-button-color: #485679;
 $menu-button-color: #212c44;
 $evaluate-button-color: #59d862;
+$variable-button-color: #49587e;
 
 .button-container {
   width: calc(100% + 0.1rem);
@@ -77,6 +78,17 @@ $evaluate-button-color: #59d862;
 
   &:hover {
     background-color: lighten($menu-button-color, 10%);
+  }
+}
+
+#x,
+#y,
+#u,
+#v {
+  background-color: $variable-button-color;
+
+  &:hover {
+    background-color: lighten($variable-button-color, 10%);
   }
 }
 
@@ -275,30 +287,42 @@ $evaluate-button-color: #59d862;
 }
 
 .mobile-alt-menu-grid {
-  grid-template-areas:
-    "menu left-parenthesis right-parenthesis ."
-    "evaluate evaluate evaluate evaluate";
-
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 
-  #menu {
-    grid-area: 1 / 1 / 2 / 2;
+  #x {
+    grid-area: 1 / 1 / 1 / 2;
   }
 
-  #left-parenthesis {
-    grid-area: 1 / 2 / 2 / 3;
+  #y {
+    grid-area: 1 / 2 / 1 / 3;
   }
 
-  #right-parenthesis {
+  #u {
     grid-area: 1 / 3 / 2 / 4;
   }
 
-  #sqrt {
+  #v {
     grid-area: 1 / 4 / 2 / 5;
   }
 
+  #menu {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  #left-parenthesis {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  #right-parenthesis {
+    grid-area: 2 / 3 / 3 / 4;
+  }
+
+  #sqrt {
+    grid-area: 2 / 4 / 3 / 5;
+  }
+
   #evaluate {
-    grid-area: 2 / 1 / 3 / 5;
+    grid-area: 3 / 1 / 4 / 5;
   }
 }

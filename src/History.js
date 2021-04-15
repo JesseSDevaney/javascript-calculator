@@ -72,7 +72,7 @@ export function History(props) {
     style["height"] = "20%";
   } else if(altMenuToggled) {
     style["order"] = "2";
-    style["height"] = "52.26%";
+    style["height"] = "38.4%";
   } else {
     style["display"] = "none";
   }

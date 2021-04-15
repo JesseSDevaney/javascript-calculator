@@ -55,7 +55,11 @@ const MOBILE_ALT_MENU_BUTTONS = {
   "menu": "menu",
   "left-parenthesis": "(",
   "right-parenthesis": ")",
-  "sqrt": "sqrt"
+  "sqrt": "sqrt",
+  "u": "u",
+  "v": "v",
+  "x": "x",
+  "y": "z"
 }
 
 
@@ -86,41 +90,69 @@ export function ButtonContainer(props) {
     if(!isMobile){
       return '60%';
     } else if (altMenuToggled) {
-      return '27.73%';
+      return '41.6%';
     } else {
       return '80%';
     }
   };
 
   const displayButtons = (buttons) => {
-    const buttonKey = Object.keys(buttons);
+    const buttonIds = Object.keys(buttons);
 
-    return buttonKey.map(key => {
-        if(buttons.hasOwnProperty(key)){
-          let buttonText = buttons[key];
+    return buttonIds.map(buttonId => {
+        if(buttons.hasOwnProperty(buttonId)){
+          let buttonText = buttons[buttonId];
+          let displayText = "";
 
-          if(key === "clear" && expression === ""){
-            key = "all-clear";
+          if(buttonId === "clear" && expression === ""){
+            buttonId = "all-clear";
             buttonText = "AC";
+          }
+
+          switch(buttonId) {
+            case "divide":
+              displayText = <>&#247;</>;
+              break;
+            case "multiply":
+              displayText = <>&times;</>;
+              break;
+            case "subtract":
+              displayText = <>&minus;</>;
+              break;
+            case "equals":
+              displayText = <>&#8332;</>;
+              break;
+            case "exponential":
+              displayText = <><pre>x<sup>n</sup></pre></>;
+              break;
+            case "sqrt":
+              displayText = <>&radic;</>;
+              break;
+            case "back":
+              displayText = <i className="fa fa-long-arrow-left" aria-hidden="true"></i>;
+              break;
+            case "all-clear":
+              displayText = <i className="fa fa-trash-o" aria-hidden="true"></i>;
+              break;
+            default:
+              displayText = buttonText;
+              break;
           }
 
           return (
             <button 
               className="calculatorButton"
-              id={key} 
-              key={key}
-              onClick={handleButtonPress}>
-                {buttonText}
+              id={buttonId} 
+              key={buttonId}
+              button-text={buttonText}
+              onClick={(e) => sendButtonPress(buttonId, buttonText)}>
+                {displayText}
               </button>
           );
         }
 
         return null;
       });
-  };
-
-  const handleButtonPress = (event) => {
-      sendButtonPress(event.target.id);
   };
 
   const buttons = getButtons(altMenuToggled, isMobile);
