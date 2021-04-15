@@ -9,11 +9,18 @@ export function History(props) {
     scrollToBottom();
   }, [history]);
 
-  const displayCalculation = ({id, expression, result}) => {
+  const displayCalculation = ({id, expression, result}, isMobile) => {
     const roundedResult = round(result, 4).toString();
+    let classNames = "result-container"
+
+    if(isMobile){
+      classNames += " result-container-mobile"
+    } else {
+      classNames += " result-container-desktop"
+    }
 
     return (
-        <div className="result-container" data-id={"calculation"+id} key={id}>
+        <div className={classNames} data-id={"calculation"+id} key={id}>
             <div className="expression" data-id={"calculation"+id} onClick={restoreExpression}><p data-id={"calculation"+id}>{expression}</p></div>
             <div className="equals">=</div>
             <div className="result" data-id={"calculation"+id} onClick={restoreResult}><p data-id={"calculation"+id}>{roundedResult}</p></div>
@@ -56,7 +63,7 @@ export function History(props) {
     }
   }
 
-  const previousCalculations = history.map((calculation) => displayCalculation(calculation));
+  const previousCalculations = history.map((calculation) => displayCalculation(calculation, isMobile));
 
   const style = {};
 
@@ -65,7 +72,7 @@ export function History(props) {
     style["height"] = "20%";
   } else if(altMenuToggled) {
     style["order"] = "2";
-    style["height"] = "40%";
+    style["height"] = "52.26%";
   } else {
     style["display"] = "none";
   }

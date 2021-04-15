@@ -87,18 +87,20 @@ class App extends React.Component {
     let result = "";
     const variablesAfter = Object.assign({}, variables);
 
-    try {
-      result = evaluate(expression, variablesAfter);
-      if (isDifferent(variables, variablesAfter)){
-        this.updateVariables(variablesAfter);
+    if (expression !== ""){
+      try {
+        result = evaluate(expression, variablesAfter);
+        if (isDifferent(variables, variablesAfter)){
+          this.updateVariables(variablesAfter);
+        }
+        if (result !== "") {
+          this.submitResult(result);
+        }
       }
-      if (result !== "") {
-        this.submitResult(result);
+      catch (error) {
+        console.error(error);
+        this.throwMalformedError();
       }
-    }
-    catch (error) {
-      console.error(error);
-      this.throwMalformedError();
     }
   }
 
@@ -123,7 +125,7 @@ class App extends React.Component {
   }
 
   handleButtonPress(buttonId){
-    const { calculation: { expression, result }, cursorIndex } = this.state;
+    const { calculation: { expression, result } } = this.state;
     let buttonText = document.getElementById(buttonId).textContent;
     let newExpression = "";
 
@@ -131,7 +133,7 @@ class App extends React.Component {
       case "back":
         this.getPreviousCalculation();
         break;
-      case "all clear":
+      case "all-clear":
         this.clearMemory();
         break;
       case "clear":
@@ -152,7 +154,7 @@ class App extends React.Component {
           this.updateExpression(newExpression);
         }
         break;
-      case "alt-menu":
+      case "alt":
         this.toggleMenu();
         break;
       case "menu":
@@ -162,7 +164,7 @@ class App extends React.Component {
         if (result === ""){
           newExpression = expression + buttonText + "(";
         } else {
-          newExpression = buttonText + "(" + result;
+          newExpression = buttonText + "(" + result + ")";
         }
         this.updateCursorIndex(newExpression.length)
         this.updateExpression(newExpression)

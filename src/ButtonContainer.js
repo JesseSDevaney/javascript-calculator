@@ -43,18 +43,19 @@ const MOBILE_MENU_BUTTONS = {
     "divide": "/",
     "multiply": "*",
     "clear": "C",
+    "back": "Back",
     "exponential": "^",
-    "sqrt": "sqrt",
     "equals": "=",
     "evaluate": "Evaluate",
-    "alt-menu": "alt-menu",
+    "alt": "alt",
 }
 
 const MOBILE_ALT_MENU_BUTTONS = {
   "evaluate": "Evaluate",
   "menu": "menu",
   "left-parenthesis": "(",
-  "right-parenthesis": ")"
+  "right-parenthesis": ")",
+  "sqrt": "sqrt"
 }
 
 
@@ -85,7 +86,7 @@ export function ButtonContainer(props) {
     if(!isMobile){
       return '60%';
     } else if (altMenuToggled) {
-      return '40%';
+      return '27.73%';
     } else {
       return '80%';
     }
@@ -97,10 +98,9 @@ export function ButtonContainer(props) {
     return buttonKey.map(key => {
         if(buttons.hasOwnProperty(key)){
           let buttonText = buttons[key];
-          const style = {"gridArea": key};
 
           if(key === "clear" && expression === ""){
-            key = "all clear";
+            key = "all-clear";
             buttonText = "AC";
           }
 
@@ -108,8 +108,7 @@ export function ButtonContainer(props) {
             <button 
               className="calculatorButton"
               id={key} 
-              key={key} 
-              style={style} 
+              key={key}
               onClick={handleButtonPress}>
                 {buttonText}
               </button>

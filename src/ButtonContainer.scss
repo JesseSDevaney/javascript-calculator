@@ -1,37 +1,304 @@
+$default-button-color: #6878a1;
+$number-button-color: #8592b1;
+$operator-button-color: #485679;
+$menu-button-color: #212c44;
+$evaluate-button-color: #59d862;
+
 .button-container {
+  width: calc(100% + 0.1rem);
   order: 4;
   display: grid;
-  grid-gap: 1rem;
-  padding: 0.5rem;
-  width: calc(100% - 1rem);
+  grid-gap: 1px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 
   .calculatorButton {
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: Lato, serif;
+    font-size: 1.3rem;
+    font-weight: 100;
+    padding: 0;
+    margin: 0;
+    border: none;
+    overflow: hidden;
+    color: white;
+    background-color: $default-button-color;
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      background-color: lighten($default-button-color, 10%);
+    }
+  }
+}
+
+#evaluate {
+  background-color: $evaluate-button-color;
+
+  &:hover {
+    background-color: lighten($evaluate-button-color, 10%);
+  }
+}
+
+#decimal,
+#zero,
+#one,
+#two,
+#three,
+#four,
+#five,
+#six,
+#seven,
+#eight,
+#nine {
+  background-color: $number-button-color;
+
+  &:hover {
+    background-color: lighten($number-button-color, 10%);
+  }
+}
+
+#add,
+#subtract,
+#multiply,
+#divide,
+#equals {
+  background-color: $operator-button-color;
+
+  &:hover {
+    background-color: lighten($operator-button-color, 10%);
+  }
+}
+
+#menu,
+#alt {
+  background-color: $menu-button-color;
+
+  &:hover {
+    background-color: lighten($menu-button-color, 10%);
   }
 }
 
 .desktop-grid {
-  grid-template-areas:
-    "seven eight nine divide back clear"
-    "four five six multiply left-parenthesis right-parenthesis"
-    "one two three subtract exponential sqrt"
-    "zero zero decimal add equals equals"
-    "evaluate evaluate evaluate evaluate evaluate evaluate";
+  grid-template-columns: repeat(4, 1.3fr) repeat(2, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+
+  #all-clear {
+    grid-area: 1 / 6 / 2 / 7;
+  }
+
+  #clear {
+    grid-area: 1 / 6 / 2 / 7;
+  }
+
+  #back {
+    grid-area: 1 / 5 / 2 / 6;
+  }
+
+  #divide {
+    grid-area: 1 / 4 / 2 / 5;
+  }
+
+  #multiply {
+    grid-area: 2 / 4 / 3 / 5;
+  }
+
+  #subtract {
+    grid-area: 3 / 4 / 4 / 5;
+  }
+
+  #add {
+    grid-area: 4 / 4 / 5 / 5;
+  }
+
+  #equals {
+    grid-area: 4 / 5 / 5 / 7;
+  }
+
+  #left-parenthesis {
+    grid-area: 2 / 5 / 3 / 6;
+  }
+
+  #right-parenthesis {
+    grid-area: 2 / 6 / 3 / 7;
+  }
+
+  #exponential {
+    grid-area: 3 / 5 / 4 / 6;
+  }
+
+  #sqrt {
+    grid-area: 3 / 6 / 4 / 7;
+  }
+
+  #nine {
+    grid-area: 1 / 3 / 2 / 4;
+  }
+
+  #eight {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  #seven {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  #six {
+    grid-area: 2 / 3 / 3 / 4;
+  }
+
+  #five {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  #four {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  #three {
+    grid-area: 3 / 3 / 4 / 4;
+  }
+
+  #two {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+
+  #one {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+
+  #zero {
+    grid-area: 4 / 1 / 5 / 3;
+  }
+
+  #decimal {
+    grid-area: 4 / 3 / 5 / 4;
+  }
+
+  #evaluate {
+    grid-area: 5 / 1 / 6 / 7;
+  }
 }
 
 .mobile-menu-grid {
-  grid-template-areas:
-    "clear exponential sqrt divide"
-    "seven eight nine multiply"
-    "four five six subtract"
-    "one two three add"
-    "alt-menu zero decimal equals"
-    "evaluate evaluate evaluate evaluate";
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr repeat(5, 1.3fr);
+
+  #all-clear {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  #clear {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  #back {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  #divide {
+    grid-area: 1 / 4 / 2 / 5;
+  }
+
+  #multiply {
+    grid-area: 2 / 4 / 3 / 5;
+  }
+
+  #subtract {
+    grid-area: 3 / 4 / 4 / 5;
+  }
+
+  #add {
+    grid-area: 4 / 4 / 5 / 5;
+  }
+
+  #equals {
+    grid-area: 5 / 4 / 6 / 5;
+  }
+
+  #exponential {
+    grid-area: 1 / 3 / 2 / 4;
+  }
+
+  #nine {
+    grid-area: 2 / 3 / 3 / 4;
+  }
+
+  #eight {
+    grid-area: 2 / 2 / 3 / 3;
+  }
+
+  #seven {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  #six {
+    grid-area: 3 / 3 / 4 / 4;
+  }
+
+  #five {
+    grid-area: 3 / 2 / 4 / 3;
+  }
+
+  #four {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+
+  #three {
+    grid-area: 4 / 3 / 5 / 4;
+  }
+
+  #two {
+    grid-area: 4 / 2 / 5 / 3;
+  }
+
+  #one {
+    grid-area: 4 / 1 / 5 / 2;
+  }
+
+  #zero {
+    grid-area: 5 / 2 / 6 / 3;
+  }
+
+  #alt {
+    grid-area: 5 / 1 / 6 / 2;
+  }
+
+  #decimal {
+    grid-area: 5 / 3 / 6 / 4;
+  }
+
+  #evaluate {
+    grid-area: 6 / 1 / 7 / 5;
+  }
 }
 
 .mobile-alt-menu-grid {
   grid-template-areas:
     "menu left-parenthesis right-parenthesis ."
     "evaluate evaluate evaluate evaluate";
+
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+
+  #menu {
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
+  #left-parenthesis {
+    grid-area: 1 / 2 / 2 / 3;
+  }
+
+  #right-parenthesis {
+    grid-area: 1 / 3 / 2 / 4;
+  }
+
+  #sqrt {
+    grid-area: 1 / 4 / 2 / 5;
+  }
+
+  #evaluate {
+    grid-area: 2 / 1 / 3 / 5;
+  }
 }
