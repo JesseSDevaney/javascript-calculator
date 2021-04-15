@@ -119,9 +119,6 @@ export function ButtonContainer(props) {
             case "subtract":
               displayText = <>&minus;</>;
               break;
-            case "equals":
-              displayText = <>&#8332;</>;
-              break;
             case "exponential":
               displayText = <><pre>x<sup>n</sup></pre></>;
               break;
