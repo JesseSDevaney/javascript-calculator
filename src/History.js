@@ -7,7 +7,7 @@ export function History(props) {
 
   useEffect(() => {
     scrollToBottom();
-  }, [history]);
+  }, [history, altMenuToggled]);
 
   const displayCalculation = ({id, expression, result}, isMobile) => {
     const roundedResult = round(result, 4).toString();

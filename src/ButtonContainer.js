@@ -126,7 +126,7 @@ export function ButtonContainer(props) {
               displayText = <>&radic;</>;
               break;
             case "back":
-              displayText = <i class="fa fa-angle-double-left" aria-hidden="true"></i>;
+              displayText = <i className="fa fa-angle-double-left" aria-hidden="true"></i>;
               break;
             case "all-clear":
               displayText = <i className="fa fa-trash-o" aria-hidden="true"></i>;
