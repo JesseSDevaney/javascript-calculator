@@ -11,7 +11,7 @@ export function Tooltip(props){
         <div class="example">
           <p>Evaluate executes the expression in the display.</p>
           <p>In what follows, we will use <code>{evaluate}</code> to mean evaluate</p>
-          <pre>4^2 -> 16</pre>
+          <pre>4^2 {evaluate} 16</pre>
         </div>
       </div>
       <div class="tip">
