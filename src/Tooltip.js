@@ -25,8 +25,8 @@ export function Tooltip(props){
         </div>
         <div className="example">
           <h3>Equality Comparison</h3>
-          <pre>7+3*4 == 7+12 {evaluate} true</pre>
-          <pre>3^3 == 2*3+35 {evaluate} false</pre>
+          <pre>7+3*4 == 7+12 {evaluate} true (1)</pre>
+          <pre>3^3 == 2*3+35 {evaluate} false (0)</pre>
         </div>
       </div>
     </div>
