@@ -1,0 +1,26 @@
+$tooltip-color: #8592b1;
+
+#tooltip {
+  position: absolute;
+  background: $tooltip-color;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+
+  #info {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.7rem;
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    border-radius: 50%;
+    outline: none;
+    background: #ce2e2e;
+    color: white;
+    font-size: 1em;
+
+    &:hover {
+    }
+  }
+}

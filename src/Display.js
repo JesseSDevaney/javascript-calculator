@@ -4,11 +4,12 @@ import InputContainer from "./InputContainer";
 
 export function Display(props){
     const { expression, isMalformed, result } = props.calculation;
-    const { 
-        isInputUnfocused, 
+    const {
         cursorIndex, 
         handleChange, 
+        isInputUnfocused,
         restorePrevious,
+        toggleTooltip,
         updateFocus
     } = props;
 
@@ -38,6 +39,7 @@ export function Display(props){
     return (
         <div id="display">
             <p id="display-title">Display</p>
+            <button id="info" onClick={toggleTooltip}><i class="fa fa-info" aria-hidden="true"></i></button>
             {result === "" && 
                 <InputContainer 
                     cursorIndex={cursorIndex}

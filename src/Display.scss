@@ -1,6 +1,7 @@
 @use "displays";
 
 $display-hover-color: #d0d3df;
+$display-color: #fbfcff;
 
 #display {
   position: relative;
@@ -8,7 +9,7 @@ $display-hover-color: #d0d3df;
   height: 20%;
   font-family: Lato, serif;
   font-size: 1.2rem;
-  background-color: #fbfcff;
+  background-color: $display-color;
 
   .result-container {
     position: absolute;
@@ -45,6 +46,19 @@ $display-hover-color: #d0d3df;
       &:hover {
         background-color: $display-hover-color;
       }
+    }
+  }
+
+  #info {
+    position: absolute;
+    z-index: 4;
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+
+    &:hover {
     }
   }
 

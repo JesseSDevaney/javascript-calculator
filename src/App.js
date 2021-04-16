@@ -1,9 +1,10 @@
 import React from "react";
 import { evaluate } from 'mathjs';
 import './App.scss';
+import ButtonContainer from './ButtonContainer';
 import Display from './Display';
 import History from './History';
-import ButtonContainer from './ButtonContainer';
+import Tooltip from './Tooltip';
 
 const DEFAULT_CALCULATION = {
   expression: "",
@@ -46,12 +47,14 @@ class App extends React.Component {
       calculation: DEFAULT_CALCULATION,
       calculationCount: 0,
       cursorIndex: 0,
+      isTooltipToggled: false,
       history: [],
       isInputUnfocused: true,
       isMobile: false,
       variables: {},
     };
 
+    this.toggleTooltip = this.toggleTooltip.bind(this);
     this.handleButtonPress = this.handleButtonPress.bind(this);
     this.handleFocusedInput = this.handleFocusedInput.bind(this);
     this.handleUnfocusedInput = this.handleUnfocusedInput.bind(this);
@@ -212,7 +215,9 @@ class App extends React.Component {
 
     if (key === "Enter") {
       if (result === ""){
-          document.getElementById("input").blur();
+          if("activeElement" in document){
+            document.activeElement.blur();
+          }
           this.executeExpression();
       } else {
         const resultStr = result.toString();
@@ -317,6 +322,12 @@ class App extends React.Component {
     }));
   }
 
+  toggleTooltip(){
+    this.setState(prevState => ({
+      isTooltipToggled: !prevState.isTooltipToggled
+    }));
+  }
+
   throwMalformedError(){
     this.setState(prevState => {
       const oldCalculation = prevState.calculation;
@@ -386,19 +397,24 @@ class App extends React.Component {
       cursorIndex, 
       history, 
       isInputUnfocused, 
-      isMobile
+      isMobile,
+      isTooltipToggled
     } = this.state;
     const expression = calculation.expression;
 
     // TODO: Implement other components
     return (
-      <main id="calculator">
+      <>
+      <main id="calculator" >
+      {isTooltipToggled && <Tooltip toggleTooltip={this.toggleTooltip}/> }
+
         <Display 
           calculation={calculation}
           cursorIndex={cursorIndex}
           isInputUnfocused={isInputUnfocused}
           handleChange={this.handleFocusedInput}
           restorePrevious={this.restorePrevious}
+          toggleTooltip={this.toggleTooltip}
           updateFocus={this.updateFocus}
           />
         
@@ -430,6 +446,7 @@ class App extends React.Component {
             <History />
             <ButtonContainer /> */}
       </main>
+      </>
     );
   }
 }
