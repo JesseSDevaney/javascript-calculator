@@ -39,7 +39,7 @@ export function Display(props){
     return (
         <div id="display">
             <p id="display-title">Display</p>
-            <button id="info" onClick={toggleTooltip}><i class="fa fa-info" aria-hidden="true"></i></button>
+            <button id="display-tooltip" onClick={toggleTooltip}><i className="fa fa-info" aria-hidden="true"></i></button>
             {result === "" && 
                 <InputContainer 
                     cursorIndex={cursorIndex}

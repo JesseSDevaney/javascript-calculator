@@ -2,6 +2,7 @@
 
 $display-hover-color: #d0d3df;
 $display-color: #fbfcff;
+$tooltip-button-color: #d7d9e4;
 
 #display {
   position: relative;
@@ -49,16 +50,20 @@ $display-color: #fbfcff;
     }
   }
 
-  #info {
+  #display-tooltip {
     position: absolute;
     z-index: 4;
     top: 0.5rem;
     right: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    border-radius: 50%;
+    width: 2.7rem;
+    height: 1.5rem;
+    border: 1px solid black;
+    border-radius: 3px;
+    outline: none;
+    background: $tooltip-button-color;
 
     &:hover {
+      background: lighten($tooltip-button-color, 8%);
     }
   }
 

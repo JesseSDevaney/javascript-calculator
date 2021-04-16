@@ -211,79 +211,85 @@ class App extends React.Component {
 
   handleUnfocusedInput(event){
     const key = event.key;
-    let { calculation: { result }, isInputUnfocused } = this.state;
+    let { 
+      calculation: { result },
+      isInputUnfocused,
+      isTooltipToggled
+    } = this.state;
 
-    if (key === "Enter") {
-      if (result === ""){
-          if("activeElement" in document){
-            document.activeElement.blur();
-          }
-          this.executeExpression();
-      } else {
-        const resultStr = result.toString();
-        this.updateCursorIndex(resultStr.length);
-        this.updateExpression(resultStr);
+    if(!isTooltipToggled){
+      if (key === "Enter") {
+        if (result === ""){
+            if("activeElement" in document){
+              document.activeElement.blur();
+            }
+            this.executeExpression();
+        } else {
+          const resultStr = result.toString();
+          this.updateCursorIndex(resultStr.length);
+          this.updateExpression(resultStr);
+        }
       }
-    }
-    else if (shouldCaptureKey(key) && isInputUnfocused){
-      let {calculation: {expression}, cursorIndex} = this.state;
-      let newExpression = "";
+      else if (shouldCaptureKey(key) && isInputUnfocused){
+        let {calculation: {expression}, cursorIndex} = this.state;
+        let newExpression = "";
 
-      switch(key){
-        case "Backspace":
-          if (result !== ""){
-            this.updateCursorIndex(0);
-            this.updateExpression("");
-          }
-          else if (cursorIndex !== 0){
-            newExpression = expression.slice(0, cursorIndex - 1) + expression.slice(cursorIndex);
-            this.updateCursorIndex(cursorIndex - 1);
-            this.updateExpression(newExpression);
-          }
-          break;
-        case "Delete":
-          if (cursorIndex !== expression.length){
-            newExpression = expression.slice(0, cursorIndex) + expression.slice(cursorIndex+1);
-            this.updateExpression(newExpression);
-          }
-          break;
-        case "ArrowLeft":
-          if (cursorIndex > 0){
-            this.updateCursorIndex(cursorIndex - 1);
-          }
-          this.updateExpression(expression);
-          break;
-        case "ArrowRight":
-          if (cursorIndex < expression.length){
-            this.updateCursorIndex(cursorIndex + 1);
-          }
-          this.updateExpression(expression);
-          break;
-        case "Home":
-          this.updateCursorIndex(0);
-          break;
-        case "End":
-          this.updateCursorIndex(expression.length);
-          break;
-        default:
-          if(result === ""){
-            newExpression = expression.slice(0, cursorIndex) + key + expression.slice(cursorIndex)
-            this.updateCursorIndex(cursorIndex + 1);
-            this.updateExpression(newExpression);
-          }
-          else {
-            const numList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-            if (numList.includes(key)){
-              this.updateCursorIndex(1);
-              this.updateExpression(key);
-            } else {
-              const resultStr = result.toString();
-              newExpression = resultStr + key;
-              this.updateCursorIndex(newExpression.length);
+        switch(key){
+          case "Backspace":
+            if (result !== ""){
+              this.updateCursorIndex(0);
+              this.updateExpression("");
+            }
+            else if (cursorIndex !== 0){
+              newExpression = expression.slice(0, cursorIndex - 1) + expression.slice(cursorIndex);
+              this.updateCursorIndex(cursorIndex - 1);
               this.updateExpression(newExpression);
             }
-          }
-          break;
+            break;
+          case "Delete":
+            if (cursorIndex !== expression.length){
+              newExpression = expression.slice(0, cursorIndex) + expression.slice(cursorIndex+1);
+              this.updateExpression(newExpression);
+            }
+            break;
+          case "ArrowLeft":
+            if (cursorIndex > 0){
+              this.updateCursorIndex(cursorIndex - 1);
+            }
+            this.updateExpression(expression);
+            break;
+          case "ArrowRight":
+            if (cursorIndex < expression.length){
+              this.updateCursorIndex(cursorIndex + 1);
+            }
+            this.updateExpression(expression);
+            break;
+          case "Home":
+            this.updateCursorIndex(0);
+            break;
+          case "End":
+            this.updateCursorIndex(expression.length);
+            break;
+          default:
+            if(result === ""){
+              newExpression = expression.slice(0, cursorIndex) + key + expression.slice(cursorIndex)
+              this.updateCursorIndex(cursorIndex + 1);
+              this.updateExpression(newExpression);
+            }
+            else {
+              const numList = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+              if (numList.includes(key)){
+                this.updateCursorIndex(1);
+                this.updateExpression(key);
+              } else {
+                const resultStr = result.toString();
+                newExpression = resultStr + key;
+                this.updateCursorIndex(newExpression.length);
+                this.updateExpression(newExpression);
+              }
+            }
+            break;
+        }
       }
     }
   }
