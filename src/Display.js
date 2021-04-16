@@ -2,7 +2,7 @@ import { round } from "mathjs";
 import './Display.scss';
 import InputContainer from "./InputContainer";
 
-export function Display(props){
+export default function Display(props){
     const { expression, isMalformed, result } = props.calculation;
     const {
         cursorIndex, 
@@ -55,5 +55,3 @@ export function Display(props){
         </div>
     );
 }
-
-export default Display;

@@ -1,29 +1,35 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { round } from "mathjs";
 import "./History.scss";
 
-export function History(props) {
+export default function History(props) {
   const { altMenuToggled, history, isMobile, restorePrevious } = props;
 
   useEffect(() => {
     scrollToBottom();
-  }, [history, altMenuToggled]);
+  }, [history]);
+
+  useEffect(() => {
+    if(altMenuToggled){
+      scrollToBottom();
+    }
+  }, [altMenuToggled]);
 
   const displayCalculation = ({id, expression, result}, isMobile) => {
     const roundedResult = round(result, 4).toString();
-    let classNames = "result-container"
+    let classNames = "result-container";
 
     if(isMobile){
-      classNames += " result-container-mobile"
+      classNames += " result-container-mobile";
     } else {
-      classNames += " result-container-desktop"
+      classNames += " result-container-desktop";
     }
 
     return (
-        <div className={classNames} data-id={"calculation"+id} key={id}>
-            <div className="expression" data-id={"calculation"+id} onClick={restoreExpression}><p data-id={"calculation"+id}>{expression}</p></div>
+        <div className={classNames} key={id}>
+            <div className="expression" data-id={"calculation"+id} onClick={restoreExpression}><p>{expression}</p></div>
             <div className="equals">=</div>
-            <div className="result" data-id={"calculation"+id} onClick={restoreResult}><p data-id={"calculation"+id}>{roundedResult}</p></div>
+            <div className="result" data-id={"calculation"+id} onClick={restoreResult}><p>{roundedResult}</p></div>
         </div>
     );
   }
@@ -40,9 +46,8 @@ export function History(props) {
   }
 
   const restoreExpression = (event) => {
-    let id = event.target.attributes["data-id"].nodeValue.replace("calculation", "");
-    
     try {
+      const id = event.currentTarget.attributes["data-id"].nodeValue.replace("calculation", "");
       const { expression } = findCalculationById(id);
       restorePrevious(expression);
     }
@@ -52,9 +57,8 @@ export function History(props) {
   }
 
   const restoreResult = (event) => {
-    let id = event.target.attributes["data-id"].nodeValue.replace("calculation", "");
-
     try {
+      const id = event.currentTarget.attributes["data-id"].nodeValue.replace("calculation", "");
       const { result } = findCalculationById(id)
       restorePrevious(result.toString());
     }
@@ -83,5 +87,3 @@ export function History(props) {
     </div>
   );
 }
-
-export default History;

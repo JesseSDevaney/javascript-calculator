@@ -54,12 +54,12 @@ class App extends React.Component {
       variables: {},
     };
 
-    this.toggleTooltip = this.toggleTooltip.bind(this);
     this.handleButtonPress = this.handleButtonPress.bind(this);
     this.handleFocusedInput = this.handleFocusedInput.bind(this);
     this.handleUnfocusedInput = this.handleUnfocusedInput.bind(this);
     this.restorePrevious = this.restorePrevious.bind(this);
     this.setMobile = this.setMobile.bind(this);
+    this.toggleTooltip = this.toggleTooltip.bind(this);
     this.updateFocus = this.updateFocus.bind(this);
   }
 
@@ -96,9 +96,7 @@ class App extends React.Component {
         if (isDifferent(variables, variablesAfter)){
           this.updateVariables(variablesAfter);
         }
-        if (result !== "") {
-          this.submitResult(result);
-        }
+        this.submitResult(result);
       }
       catch (error) {
         console.error(error);
@@ -120,10 +118,6 @@ class App extends React.Component {
         };
         return {calculation: newCalculation};
       }
-      else {
-        return {};
-      }
-
     })
   }
 
@@ -247,7 +241,11 @@ class App extends React.Component {
             }
             break;
           case "Delete":
-            if (cursorIndex !== expression.length){
+            if (result !== ""){
+              this.updateCursorIndex(0);
+              this.updateExpression("");
+            }
+            else if (cursorIndex !== expression.length){
               newExpression = expression.slice(0, cursorIndex) + expression.slice(cursorIndex+1);
               this.updateExpression(newExpression);
             }
@@ -266,9 +264,11 @@ class App extends React.Component {
             break;
           case "Home":
             this.updateCursorIndex(0);
+            this.updateExpression(expression);
             break;
           case "End":
             this.updateCursorIndex(expression.length);
+            this.updateExpression(expression);
             break;
           default:
             if(result === ""){
@@ -408,11 +408,9 @@ class App extends React.Component {
     } = this.state;
     const expression = calculation.expression;
 
-    // TODO: Implement other components
     return (
-      <>
       <main id="calculator" >
-      {isTooltipToggled && <Tooltip toggleTooltip={this.toggleTooltip}/> }
+        {isTooltipToggled && <Tooltip toggleTooltip={this.toggleTooltip}/> }
 
         <Display 
           calculation={calculation}
@@ -437,22 +435,7 @@ class App extends React.Component {
           isMobile={isMobile}
           sendButtonPress={this.handleButtonPress}
         />
-          
-      {/* REAL CODE */}
-        {/* When screen size greater than ... */}
-          {/* <History />
-          <Display />
-          <ButtonContainer /> */}
-        {/* When screen size less than ... */}
-          {/* When menuToggled */}
-            {/* <Display />
-            <ButtonContainer /> */}
-          {/* When !menuToggled */}
-            {/* <Display />
-            <History />
-            <ButtonContainer /> */}
       </main>
-      </>
     );
   }
 }

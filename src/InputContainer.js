@@ -1,6 +1,6 @@
 import "./InputContainer.scss";
 
-export function InputContainer(props){
+export default function InputContainer(props){
     const { 
         cursorIndex, 
         expression, 
@@ -57,5 +57,3 @@ export function InputContainer(props){
         </div>
     );
 }
-
-export default InputContainer;

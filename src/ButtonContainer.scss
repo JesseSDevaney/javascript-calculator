@@ -10,13 +10,10 @@ $variable-button-color: #49587e;
   order: 4;
   display: grid;
   grid-gap: 1px;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
-    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 
   .calculatorButton {
     font-family: Lato, serif;
     font-size: 1.3rem;
-    font-weight: 100;
     padding: 0;
     margin: 0;
     border: none;
