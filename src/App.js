@@ -1,5 +1,5 @@
 import React from "react";
-import { evaluate } from 'mathjs';
+import { evaluate, format } from 'mathjs';
 import './App.scss';
 import ButtonContainer from './ButtonContainer';
 import Display from './Display';
@@ -97,6 +97,7 @@ class App extends React.Component {
           this.updateVariables(variablesAfter);
         }
 
+        result = format(result, {precision: 13});
         this.submitResult(result.toString());
       }
       catch (error) {
