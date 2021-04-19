@@ -96,7 +96,8 @@ class App extends React.Component {
         if (isDifferent(variables, variablesAfter)){
           this.updateVariables(variablesAfter);
         }
-        this.submitResult(result);
+
+        this.submitResult(result.toString());
       }
       catch (error) {
         console.error(error);

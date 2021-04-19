@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { round } from "mathjs";
 import "./History.scss";
 
 export default function History(props) {
@@ -16,7 +15,6 @@ export default function History(props) {
   }, [altMenuToggled]);
 
   const displayCalculation = ({id, expression, result}, isMobile) => {
-    const roundedResult = round(result, 4).toString();
     let classNames = "result-container";
 
     if(isMobile){
@@ -29,7 +27,7 @@ export default function History(props) {
         <div className={classNames} key={id}>
             <div className="expression" data-id={"calculation"+id} onClick={restoreExpression}><p>{expression}</p></div>
             <div className="equals">=</div>
-            <div className="result" data-id={"calculation"+id} onClick={restoreResult}><p>{roundedResult}</p></div>
+            <div className="result" data-id={"calculation"+id} onClick={restoreResult}><p>{result}</p></div>
         </div>
     );
   }
