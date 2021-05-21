@@ -10,5 +10,5 @@ I built the calculator using HTML, CSS (SASS), JavaScript, and React.
 
 ## License
 
-Copyright (c) 2021 Jesse S Devaney <jessesdevaney@gmail.com>  
+Copyright (c) 2021 Jesse S. Devaney
 MIT License

@@ -1,6 +1,6 @@
 # JavaScript Calculator
 
-Copyright (c) 2021 Jesse S Devaney <jessesdevaney@gmail.com>
+Copyright (c) 2021 Jesse S Devaney
 
 ## Dependencies
 
@@ -15,7 +15,6 @@ Copyright (c) 2021 Jesse S Devaney <jessesdevaney@gmail.com>
 - https://github.com/facebook/create-react-app
 - MIT License
 - Copyright (c) Facebook, Inc. and its affiliates.
-
 
 ### sass 1.32.8
 
